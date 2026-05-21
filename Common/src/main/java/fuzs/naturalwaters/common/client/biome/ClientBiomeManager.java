@@ -7,10 +7,11 @@ import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -86,13 +87,11 @@ public final class ClientBiomeManager extends SimpleJsonResourceReloadListener<B
         consumer.accept(NaturalWaters.id("client_biome_manager"), instance = new ClientBiomeManager());
     }
 
-    public static void onTagsUpdated(HolderLookup.Provider registries, boolean client) {
-        if (client) {
-            ClientBiomeManager clientBiomeManager = instance;
-            if (clientBiomeManager != null) {
-                clientBiomeManager.resolvedBiomeClientInfos = fillMissingBiomeClientInfos(registries.lookupOrThrow(
-                        Registries.BIOME), new IdentityHashMap<>(clientBiomeManager.biomeClientInfos));
-            }
+    public static void onClientTagsUpdated(RegistryAccess registries) {
+        ClientBiomeManager clientBiomeManager = instance;
+        if (clientBiomeManager != null) {
+            clientBiomeManager.resolvedBiomeClientInfos = fillMissingBiomeClientInfos(registries.lookupOrThrow(
+                    Registries.BIOME), new IdentityHashMap<>(clientBiomeManager.biomeClientInfos));
         }
     }
 

@@ -19,7 +19,15 @@ public class NaturalWatersFabricClient implements ClientModInitializer {
     /**
      * @see net.minecraft.client.renderer.block.FluidStateModelSet#WATER_MODEL
      */
-    private static final FluidModel.Unbaked WATER_MODEL = new FluidModel.Unbaked(new Material(OpaqueWaterPackResources.WATER_STILL),
+    private static final FluidModel.Unbaked TRANSPARENT_WATER_MODEL = new FluidModel.Unbaked(FluidStateModelSet.WATER_MODEL.stillMaterial(),
+            FluidStateModelSet.WATER_MODEL.flowingMaterial(),
+            FluidStateModelSet.WATER_MODEL.overlayMaterial(),
+            new WaterTintSource());
+    /**
+     * @see net.minecraft.client.renderer.block.FluidStateModelSet#WATER_MODEL
+     */
+    private static final FluidModel.Unbaked OPAQUE_WATER_MODEL = new FluidModel.Unbaked(new Material(
+            OpaqueWaterPackResources.WATER_STILL),
             new Material(OpaqueWaterPackResources.WATER_FLOW),
             FluidStateModelSet.WATER_MODEL.overlayMaterial(),
             new WaterTintSource());
@@ -30,7 +38,9 @@ public class NaturalWatersFabricClient implements ClientModInitializer {
         ColorResolverRegistry.register(CustomBiomeColors.WATER_COLOR_RESOLVER);
         ColorResolverRegistry.register(CustomBiomeColors.WATER_TRANSPARENCY_RESOLVER);
         if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceTransparency) {
-            FluidRenderingRegistry.register(Fluids.WATER, Fluids.FLOWING_WATER, WATER_MODEL);
+            FluidRenderingRegistry.register(Fluids.WATER, Fluids.FLOWING_WATER, OPAQUE_WATER_MODEL);
+        } else if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceColor) {
+            FluidRenderingRegistry.register(Fluids.WATER, Fluids.FLOWING_WATER, TRANSPARENT_WATER_MODEL);
         }
     }
 }

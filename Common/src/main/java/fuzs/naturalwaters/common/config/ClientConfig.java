@@ -13,4 +13,8 @@ public class ClientConfig implements ConfigCore {
     @Config(description = "Render water blocks with a varying transparency depending on the current biome.",
             gameRestart = true)
     public boolean waterSurfaceTransparency = true;
+
+    public boolean requiresCustomWaterTintSource() {
+        return this.waterSurfaceColor || this.waterSurfaceTransparency;
+    }
 }

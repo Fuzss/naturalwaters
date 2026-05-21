@@ -31,7 +31,15 @@ public class NaturalWatersNeoForgeClient {
     /**
      * @see net.minecraft.client.renderer.block.FluidStateModelSet#WATER_MODEL
      */
-    private static final FluidModel.Unbaked WATER_MODEL = new FluidModel.Unbaked(new Material(OpaqueWaterPackResources.WATER_STILL),
+    private static final FluidModel.Unbaked TRANSPARENT_WATER_MODEL = new FluidModel.Unbaked(FluidStateModelSet.WATER_MODEL.stillMaterial(),
+            FluidStateModelSet.WATER_MODEL.flowingMaterial(),
+            FluidStateModelSet.WATER_MODEL.overlayMaterial(),
+            new NeoForgeWaterTintSource());
+    /**
+     * @see net.minecraft.client.renderer.block.FluidStateModelSet#WATER_MODEL
+     */
+    private static final FluidModel.Unbaked OPAQUE_WATER_MODEL = new FluidModel.Unbaked(new Material(
+            OpaqueWaterPackResources.WATER_STILL),
             new Material(OpaqueWaterPackResources.WATER_FLOW),
             FluidStateModelSet.WATER_MODEL.overlayMaterial(),
             new NeoForgeWaterTintSource());
@@ -51,7 +59,9 @@ public class NaturalWatersNeoForgeClient {
         });
         eventBus.addListener((final RegisterFluidModelsEvent event) -> {
             if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceTransparency) {
-                registerFluidModel(event, WATER_MODEL, Fluids.WATER, Fluids.FLOWING_WATER);
+                registerFluidModel(event, OPAQUE_WATER_MODEL, Fluids.WATER, Fluids.FLOWING_WATER);
+            } else if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceColor) {
+                registerFluidModel(event, TRANSPARENT_WATER_MODEL, Fluids.WATER, Fluids.FLOWING_WATER);
             }
         });
     }

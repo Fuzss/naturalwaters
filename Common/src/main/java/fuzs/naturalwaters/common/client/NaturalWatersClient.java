@@ -8,9 +8,9 @@ import fuzs.naturalwaters.common.config.ClientConfig;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.common.api.client.core.v1.context.BlockColorsContext;
 import fuzs.puzzleslib.common.api.client.core.v1.context.ResourcePackReloadListenersContext;
+import fuzs.puzzleslib.common.api.client.event.v1.ClientTagsUpdatedCallback;
 import fuzs.puzzleslib.common.api.client.event.v1.renderer.FogEvents;
 import fuzs.puzzleslib.common.api.core.v1.context.PackRepositorySourcesContext;
-import fuzs.puzzleslib.common.api.event.v1.server.TagsUpdatedCallback;
 import fuzs.puzzleslib.common.api.resources.v1.PackResourcesHelper;
 import net.minecraft.client.Camera;
 import net.minecraft.client.player.LocalPlayer;
@@ -32,7 +32,7 @@ public class NaturalWatersClient implements ClientModConstructor {
     }
 
     private static void registerEventHandlers() {
-        TagsUpdatedCallback.EVENT.register(ClientBiomeManager::onTagsUpdated);
+        ClientTagsUpdatedCallback.EVENT.register(ClientBiomeManager::onClientTagsUpdated);
         FogEvents.SETUP.register(NaturalWatersClient::onSetupFog);
     }
 
@@ -53,9 +53,11 @@ public class NaturalWatersClient implements ClientModConstructor {
 
     @Override
     public void onRegisterBlockColorProviders(BlockColorsContext context) {
-        context.registerBlockColor(Blocks.WATER_CAULDRON, new WaterTintSource());
-        context.registerBlockColor(Blocks.WATER, new WaterTintSource());
-        context.registerBlockColor(Blocks.BUBBLE_COLUMN, new WaterTintSource());
+        if (NaturalWaters.CONFIG.get(ClientConfig.class).requiresCustomWaterTintSource()) {
+            context.registerBlockColor(Blocks.WATER_CAULDRON, new WaterTintSource());
+            context.registerBlockColor(Blocks.WATER, new WaterTintSource());
+            context.registerBlockColor(Blocks.BUBBLE_COLUMN, new WaterTintSource());
+        }
     }
 
     @Override
