@@ -3,29 +3,33 @@ package fuzs.naturalwaters.neoforge.data.client;
 import fuzs.naturalwaters.client.biome.BiomeClientInfo;
 import fuzs.naturalwaters.client.biome.BuiltInBiomeClientInfos;
 import fuzs.naturalwaters.client.biome.ClientBiomeManager;
-import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
+import fuzs.puzzleslib.neoforge.api.data.v2.core.NeoForgeDataProviderContext;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.JsonCodecProvider;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ModBiomeClientInfoProvider extends JsonCodecProvider<BiomeClientInfo> {
 
-    public ModBiomeClientInfoProvider(DataProviderContext context) {
-        this(context.getModId(), context.getPackOutput(), context.getRegistries());
+    public ModBiomeClientInfoProvider(NeoForgeDataProviderContext context) {
+        this(context.getModId(), context.getPackOutput(), context.getRegistries(), context.getFileHelper());
     }
 
-    public ModBiomeClientInfoProvider(String modId, PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+    public ModBiomeClientInfoProvider(String modId, PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper fileHelper) {
         super(packOutput,
                 PackOutput.Target.RESOURCE_PACK,
                 ClientBiomeManager.ASSET_DIRECTORY,
+                PackType.CLIENT_RESOURCES,
                 BiomeClientInfo.CODEC,
                 lookupProvider,
-                modId);
+                modId,
+                fileHelper);
     }
 
     @Override
@@ -41,7 +45,6 @@ public class ModBiomeClientInfoProvider extends JsonCodecProvider<BiomeClientInf
         this.biome(Biomes.FLOWER_FOREST, BuiltInBiomeClientInfos.FLOWER_FOREST);
         this.biome(Biomes.BIRCH_FOREST, BuiltInBiomeClientInfos.BIRCH_FOREST);
         this.biome(Biomes.DARK_FOREST, BuiltInBiomeClientInfos.ROOFED_FOREST);
-        this.biome(Biomes.PALE_GARDEN, BuiltInBiomeClientInfos.PALE_GARDEN);
         this.biome(Biomes.OLD_GROWTH_BIRCH_FOREST, BuiltInBiomeClientInfos.BIRCH_FOREST_HILLS);
         this.biome(Biomes.OLD_GROWTH_PINE_TAIGA, BuiltInBiomeClientInfos.MEGA_TAIGA);
         this.biome(Biomes.OLD_GROWTH_SPRUCE_TAIGA, BuiltInBiomeClientInfos.MEGA_SPRUCE_TAIGA);
@@ -97,6 +100,6 @@ public class ModBiomeClientInfoProvider extends JsonCodecProvider<BiomeClientInf
     }
 
     public final void biome(ResourceKey<Biome> resourceKey, BiomeClientInfo biomeClientInfo) {
-        this.unconditional(resourceKey.identifier(), biomeClientInfo);
+        this.unconditional(resourceKey.location(), biomeClientInfo);
     }
 }

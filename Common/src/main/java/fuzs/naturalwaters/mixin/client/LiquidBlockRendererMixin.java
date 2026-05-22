@@ -2,7 +2,7 @@ package fuzs.naturalwaters.mixin.client;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import fuzs.naturalwaters.NaturalWaters;
-import fuzs.naturalwaters.client.renderer.ModBiomeColors;
+import fuzs.naturalwaters.client.renderer.CustomBiomeColors;
 import fuzs.naturalwaters.config.ClientConfig;
 import net.minecraft.client.renderer.block.LiquidBlockRenderer;
 import net.minecraft.core.BlockPos;
@@ -10,7 +10,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,7 +27,7 @@ abstract class LiquidBlockRendererMixin {
     public void tesselate$0(BlockAndTintGetter level, BlockPos pos, VertexConsumer buffer, BlockState blockState, FluidState fluidState, CallbackInfo callback) {
         if (fluidState.is(FluidTags.WATER) &&
                 NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceTransparency) {
-            this.naturalwaters$vertexAlpha.set(ModBiomeColors.getAverageWaterTransparency(level, pos));
+            this.naturalwaters$vertexAlpha.set(CustomBiomeColors.getAverageWaterTransparency(level, pos));
         }
     }
 

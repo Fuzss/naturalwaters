@@ -2,6 +2,7 @@ package fuzs.naturalwaters.neoforge.client;
 
 import fuzs.naturalwaters.NaturalWaters;
 import fuzs.naturalwaters.client.NaturalWatersClient;
+import fuzs.naturalwaters.client.renderer.CustomBiomeColors;
 import fuzs.naturalwaters.data.client.ModAtlasProvider;
 import fuzs.naturalwaters.neoforge.client.renderer.block.NeoForgeWaterBlockRenderer;
 import fuzs.naturalwaters.neoforge.data.client.ModBiomeClientInfoProvider;
@@ -13,6 +14,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 
 @Mod(value = NaturalWaters.MOD_ID, dist = Dist.CLIENT)
@@ -27,6 +29,10 @@ public class NaturalWatersNeoForgeClient {
     }
 
     private static void registerLoadingHandlers(IEventBus eventBus) {
+        eventBus.addListener((final RegisterColorHandlersEvent.ColorResolvers event) -> {
+            event.register(CustomBiomeColors.WATER_COLOR_RESOLVER);
+            event.register(CustomBiomeColors.WATER_TRANSPARENCY_RESOLVER);
+        });
         eventBus.addListener((final FMLClientSetupEvent evt) -> {
             evt.enqueueWork(() -> {
                 // we cannot use the proper NeoForge event for registering our extension,

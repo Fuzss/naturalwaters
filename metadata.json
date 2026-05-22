@@ -3,7 +3,7 @@
         "id": "naturalwaters",
         "group": "fuzs.naturalwaters",
         "name": "Natural Waters",
-        "version": "21.11.0",
+        "version": "21.1.0",
         "authors": [
             "Fuzs"
         ],
@@ -36,13 +36,13 @@
     ],
     "links": [
         {
-            "name": "github",
-            "slug": "naturalwaters"
-        },
-        {
             "name": "curseforge",
             "slug": "natural-waters",
             "id": "1367853"
+        },
+        {
+            "name": "github",
+            "slug": "natural-waters"
         },
         {
             "name": "modrinth",

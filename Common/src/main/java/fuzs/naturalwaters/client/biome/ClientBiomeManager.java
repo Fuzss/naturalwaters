@@ -10,13 +10,12 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.biome.Biome;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -42,10 +41,10 @@ public final class ClientBiomeManager extends SimpleJsonResourceReloadListener<B
     }
 
     @Override
-    protected void apply(Map<Identifier, BiomeClientInfo> map, ResourceManager resourceManager, ProfilerFiller profiler) {
+    protected void apply(Map<ResourceLocation, BiomeClientInfo> map, ResourceManager resourceManager, ProfilerFiller profiler) {
         this.biomeClientInfos = this.resolvedBiomeClientInfos = map.entrySet()
                 .stream()
-                .collect(Collectors.toUnmodifiableMap((Map.Entry<Identifier, BiomeClientInfo> entry) -> ResourceKey.create(
+                .collect(Collectors.toUnmodifiableMap((Map.Entry<ResourceLocation, BiomeClientInfo> entry) -> ResourceKey.create(
                         Registries.BIOME,
                         entry.getKey()), Map.Entry::getValue));
         ClientPacketListener clientPacketListener = Minecraft.getInstance().getConnection();
@@ -60,7 +59,7 @@ public final class ClientBiomeManager extends SimpleJsonResourceReloadListener<B
         ClientPacketListener clientPacketListener = Minecraft.getInstance().getConnection();
         if (clientPacketListener != null) {
             return clientPacketListener.registryAccess()
-                    .lookup(Registries.BIOME)
+                    .registry(Registries.BIOME)
                     .flatMap((Registry<Biome> registry) -> registry.getResourceKey(biome))
                     .map(ClientBiomeManager::getBiomeClientInfo)
                     .orElse(BUILT_IN_FALLBACK);
@@ -82,7 +81,7 @@ public final class ClientBiomeManager extends SimpleJsonResourceReloadListener<B
         }
     }
 
-    public static void onAddResourcePackReloadListeners(BiConsumer<Identifier, PreparableReloadListener> consumer) {
+    public static void onAddResourcePackReloadListeners(BiConsumer<ResourceLocation, PreparableReloadListener> consumer) {
         consumer.accept(NaturalWaters.id("client_biome_manager"), instance = new ClientBiomeManager());
     }
 

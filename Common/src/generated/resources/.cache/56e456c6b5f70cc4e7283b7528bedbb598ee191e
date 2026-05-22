@@ -1,4 +1,4 @@
-// 1.21.11	2025-12-20T18:32:59.982149	naturalwaters/biomes generator for naturalwaters
+// 1.21.1	2026-05-22T14:27:27.332478	naturalwaters/biomes generator for naturalwaters
 33ccc714273fb0b9f131b955c7ed8f9d9f8dee23 assets/minecraft/naturalwaters/biomes/badlands.json
 f749337fe28726c90bacc981235a935cff812aee assets/minecraft/naturalwaters/biomes/bamboo_jungle.json
 b821801512da4cd8d400bb86c12ca6586884b5e5 assets/minecraft/naturalwaters/biomes/basalt_deltas.json
@@ -38,7 +38,6 @@ d4d91981254f2fab44d2aeb6ec5951be58de882f assets/minecraft/naturalwaters/biomes/m
 51156de6d590a9dd7f95960f9c66d0c2555f8f57 assets/minecraft/naturalwaters/biomes/old_growth_birch_forest.json
 f679432c66053522df525b627577626b53640c75 assets/minecraft/naturalwaters/biomes/old_growth_pine_taiga.json
 56a49f1a2d8bd9a526031a39329b42e38f0f666b assets/minecraft/naturalwaters/biomes/old_growth_spruce_taiga.json
-e9b93408ac472418b88269ed8b215584530a4c29 assets/minecraft/naturalwaters/biomes/pale_garden.json
 d4d91981254f2fab44d2aeb6ec5951be58de882f assets/minecraft/naturalwaters/biomes/plains.json
 de3100c8553be2fa34afbc195f5246c7798a08c6 assets/minecraft/naturalwaters/biomes/river.json
 4996a1f7886bb7a95fe880ded501bdb0a239420c assets/minecraft/naturalwaters/biomes/savanna.json

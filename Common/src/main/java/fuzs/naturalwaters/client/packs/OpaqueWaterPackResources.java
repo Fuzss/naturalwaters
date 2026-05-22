@@ -6,17 +6,17 @@ import fuzs.naturalwaters.NaturalWaters;
 import fuzs.naturalwaters.config.ClientConfig;
 import fuzs.puzzleslib.api.client.packs.v1.NativeImageHelper;
 import fuzs.puzzleslib.api.resources.v1.AbstractModPackResources;
+import fuzs.puzzleslib.api.util.v1.ARGB;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.ARGB;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,33 +27,33 @@ import java.util.function.BiConsumer;
 
 public class OpaqueWaterPackResources extends AbstractModPackResources {
     public static final Material WATER_STILL_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS,
-            Identifier.withDefaultNamespace("block/water_still"));
+            ResourceLocation.withDefaultNamespace("block/water_still"));
     public static final Material WATER_FLOW_MATERIAL = ModelBakery.WATER_FLOW;
     public static final Material OPAQUE_WATER_STILL_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS,
             NaturalWaters.id(WATER_STILL_MATERIAL.texture().getPath()));
     public static final Material OPAQUE_WATER_FLOW_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS,
             NaturalWaters.id(WATER_FLOW_MATERIAL.texture().getPath()));
-    private static final Map<Identifier, Identifier> RESOURCE_LOCATIONS;
+    private static final Map<ResourceLocation, ResourceLocation> RESOURCE_LOCATIONS;
 
     private final ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 
     static {
-        ImmutableMap.Builder<Identifier, Identifier> builder = ImmutableMap.builder();
+        ImmutableMap.Builder<ResourceLocation, ResourceLocation> builder = ImmutableMap.builder();
         registerTextureMapping(builder::put, OPAQUE_WATER_STILL_MATERIAL.texture(), WATER_STILL_MATERIAL.texture());
         registerTextureMapping(builder::put, OPAQUE_WATER_FLOW_MATERIAL.texture(), WATER_FLOW_MATERIAL.texture());
         RESOURCE_LOCATIONS = builder.build();
     }
 
-    static void registerTextureMapping(BiConsumer<Identifier, Identifier> consumer, Identifier providedResourceLocation, Identifier originalResourceLocation) {
+    static void registerTextureMapping(BiConsumer<ResourceLocation, ResourceLocation> consumer, ResourceLocation providedResourceLocation, ResourceLocation originalResourceLocation) {
         consumer.accept(getTextureLocation(providedResourceLocation), getTextureLocation(originalResourceLocation));
         consumer.accept(getMetadataLocation(providedResourceLocation), getMetadataLocation(originalResourceLocation));
     }
 
-    static Identifier getTextureLocation(Identifier identifier) {
+    static ResourceLocation getTextureLocation(ResourceLocation identifier) {
         return identifier.withPath((String s) -> "textures/" + s + ".png");
     }
 
-    static Identifier getMetadataLocation(Identifier identifier) {
+    static ResourceLocation getMetadataLocation(ResourceLocation identifier) {
         return identifier.withPath((String s) -> "textures/" + s + ".png.mcmeta");
     }
 
@@ -74,7 +74,7 @@ public class OpaqueWaterPackResources extends AbstractModPackResources {
     }
 
     @Override
-    public @Nullable IoSupplier<InputStream> getResource(PackType packType, Identifier identifier) {
+    public @Nullable IoSupplier<InputStream> getResource(PackType packType, ResourceLocation identifier) {
         if (RESOURCE_LOCATIONS.containsKey(identifier)) {
             Optional<Resource> optional = this.resourceManager.getResource(RESOURCE_LOCATIONS.get(identifier));
             if (optional.isPresent()) {
@@ -82,10 +82,10 @@ public class OpaqueWaterPackResources extends AbstractModPackResources {
                     try (NativeImage nativeImage = NativeImage.read(optional.get().open())) {
                         for (int x = 0; x < nativeImage.getWidth(); x++) {
                             for (int y = 0; y < nativeImage.getHeight(); y++) {
-                                int pixel = nativeImage.getPixel(x, y);
+                                int pixel = nativeImage.getPixelRGBA(x, y);
                                 int alpha = ARGB.alpha(pixel);
                                 if (alpha != 0) {
-                                    nativeImage.setPixel(x, y, ARGB.opaque(pixel));
+                                    nativeImage.setPixelRGBA(x, y, ARGB.opaque(pixel));
                                 }
                             }
                         }

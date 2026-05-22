@@ -2,7 +2,7 @@ package fuzs.naturalwaters.fabric.client.renderer.block;
 
 import fuzs.naturalwaters.NaturalWaters;
 import fuzs.naturalwaters.client.packs.OpaqueWaterPackResources;
-import fuzs.naturalwaters.client.renderer.ModBiomeColors;
+import fuzs.naturalwaters.client.renderer.CustomBiomeColors;
 import fuzs.naturalwaters.config.ClientConfig;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -11,7 +11,7 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Copied from {@link net.fabricmc.fabric.impl.client.rendering.fluid.FluidRenderHandlerRegistryImpl.WaterRenderHandler}
@@ -21,23 +21,20 @@ public final class FabricWaterBlockRenderer implements FluidRenderHandler {
     /**
      * See {@link net.minecraft.data.worldgen.biome.OverworldBiomes#NORMAL_WATER_COLOR}.
      */
-    private static final int NORMAL_WATER_COLOR = 4159204;
+    private static final int NORMAL_WATER_COLOR = 0X3F76E4;
 
     private final TextureAtlasSprite[] sprites = new TextureAtlasSprite[3], opaqueSprites = new TextureAtlasSprite[3];
 
     @Override
     public TextureAtlasSprite[] getFluidSprites(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
-        if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceTransparency) {
-            return this.opaqueSprites;
-        } else {
-            return this.sprites;
-        }
+        return NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceTransparency ? this.opaqueSprites :
+                this.sprites;
     }
 
     @Override
     public int getFluidColor(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
         if (view != null && pos != null) {
-            return ModBiomeColors.getAverageWaterColor(view, pos);
+            return CustomBiomeColors.getAverageWaterColor(view, pos);
         } else {
             return NORMAL_WATER_COLOR;
         }

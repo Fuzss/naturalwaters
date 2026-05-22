@@ -16,7 +16,7 @@
 
 package fuzs.naturalwaters.init;
 
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
@@ -108,6 +108,6 @@ public final class ConventionalBiomeTags {
     }
 
     private static TagKey<Biome> register(String tagId) {
-        return TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("c", tagId));
+        return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("c", tagId));
     }
 }
