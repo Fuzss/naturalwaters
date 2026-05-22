@@ -23,18 +23,6 @@
 | --- | --- | --- | --- | --- |
 | [1.21.1](https://github.com/Fuzss/natural-waters/tree/1.21.1) | ✅&nbsp;Maintained | [CHANGELOG.md](https://github.com/Fuzss/natural-waters/blob/1.21.1/CHANGELOG.md) | <img src="https://cdn.simpleicons.org/curseforge" width="14" />&nbsp;[CurseForge](https://www.curseforge.com/minecraft/mc-mods/natural-waters/files/all?version=1.21.1&gameVersionTypeId=4)<br /> <img src="https://cdn.simpleicons.org/modrinth" width="14" />&nbsp;[Modrinth](https://modrinth.com/mod/natural-waters/versions?g=1.21.1&l=fabric) | <img src="https://cdn.simpleicons.org/curseforge" width="14" />&nbsp;[CurseForge](https://www.curseforge.com/minecraft/mc-mods/natural-waters/files/all?version=1.21.1&gameVersionTypeId=6)<br /> <img src="https://cdn.simpleicons.org/modrinth" width="14" />&nbsp;[Modrinth](https://modrinth.com/mod/natural-waters/versions?g=1.21.1&l=neoforge) |
 
-### Minecraft 1.20.x
-
-| Branch | Status | Changelog | Downloads |
-| --- | --- | --- | --- |
-| [1.20.1](https://github.com/Fuzss/natural-waters/tree/1.20.1) | ⚠️&nbsp;Bugfixes&nbsp;only | [CHANGELOG.md](https://github.com/Fuzss/natural-waters/blob/1.20.1/CHANGELOG.md) | <img src="https://cdn.simpleicons.org/curseforge" width="14" />&nbsp;[CurseForge](https://www.curseforge.com/members/fuzs_/projects)<br /><img src="https://cdn.simpleicons.org/modrinth" width="14" />&nbsp;[Modrinth](https://modrinth.com/user/Fuzs) |
-
-### Minecraft 1.19.x
-
-| Branch | Status | Changelog | Downloads |
-| --- | --- | --- | --- |
-| [1.19.3](https://github.com/Fuzss/natural-waters/tree/1.19.3) | ❌&nbsp;Archived | [CHANGELOG.md](https://github.com/Fuzss/natural-waters/blob/1.19.3/CHANGELOG.md) | <img src="https://cdn.simpleicons.org/curseforge" width="14" />&nbsp;[CurseForge](https://www.curseforge.com/members/fuzs_/projects)<br /><img src="https://cdn.simpleicons.org/modrinth" width="14" />&nbsp;[Modrinth](https://modrinth.com/user/Fuzs) |
-
 ### Minecraft 1.18.x
 
 | Branch | Status | Changelog | Downloads |
