@@ -36,8 +36,8 @@ public class NaturalWatersFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         ClientModConstructor.construct(NaturalWaters.MOD_ID, NaturalWatersClient::new);
         ColorResolverRegistry.register(CustomBiomeColors.WATER_COLOR_RESOLVER);
-        ColorResolverRegistry.register(CustomBiomeColors.WATER_TRANSPARENCY_RESOLVER);
-        if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceTransparency) {
+        ColorResolverRegistry.register(CustomBiomeColors.WATER_OPACITY_RESOLVER);
+        if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceOpacity) {
             FluidRenderingRegistry.register(Fluids.WATER, Fluids.FLOWING_WATER, OPAQUE_WATER_MODEL);
         } else if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceColor) {
             FluidRenderingRegistry.register(Fluids.WATER, Fluids.FLOWING_WATER, TRANSPARENT_WATER_MODEL);

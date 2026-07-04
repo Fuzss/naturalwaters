@@ -20,8 +20,8 @@ public final class CustomBiomeColors {
     /**
      * @see BiomeColors
      */
-    public static final ColorResolver WATER_TRANSPARENCY_RESOLVER = (Biome biome, double x, double z) -> {
-        return ClientBiomeManager.getBiomeClientInfo(biome).getWaterSurfaceTransparency();
+    public static final ColorResolver WATER_OPACITY_RESOLVER = (Biome biome, double x, double z) -> {
+        return ClientBiomeManager.getBiomeClientInfo(biome).getWaterSurfaceOpacity();
     };
 
     private CustomBiomeColors() {
@@ -42,9 +42,9 @@ public final class CustomBiomeColors {
     /**
      * @see BiomeColors
      */
-    public static float getAverageWaterTransparency(BlockAndTintGetter level, BlockPos blockPos) {
-        if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceTransparency) {
-            int tintColor = level.getBlockTint(blockPos, WATER_TRANSPARENCY_RESOLVER);
+    public static float getAverageWaterOpacity(BlockAndTintGetter level, BlockPos blockPos) {
+        if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceOpacity) {
+            int tintColor = level.getBlockTint(blockPos, WATER_OPACITY_RESOLVER);
             // Don't allow textures to become fully opaque.
             // Bedrock Edition does this also internally despite values going up to 100%.
             return ARGB.from8BitChannel(ARGB.transparent(tintColor)) * 0.95F;

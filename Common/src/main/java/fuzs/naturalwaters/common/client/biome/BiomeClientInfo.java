@@ -14,7 +14,7 @@ import java.util.Optional;
 public record BiomeClientInfo(Optional<Integer> waterSurfaceColor,
                               Optional<Integer> waterFogColor,
                               Optional<Float> waterFogDistance,
-                              Optional<Float> waterSurfaceTransparency) {
+                              Optional<Float> waterSurfaceOpacity) {
     public static final Codec<Integer> COLOR_CODEC = Codec.withAlternative(TextColor.CODEC.xmap(TextColor::getValue,
             TextColor::fromRgb), ExtraCodecs.RGB_COLOR_CODEC);
     public static final Codec<BiomeClientInfo> CODEC = RecordCodecBuilder.create(instance -> instance.group(COLOR_CODEC.optionalFieldOf(
@@ -24,8 +24,8 @@ public record BiomeClientInfo(Optional<Integer> waterSurfaceColor,
                     .optionalFieldOf("water_fog_distance")
                     .forGetter(BiomeClientInfo::waterFogDistance),
             ExtraCodecs.floatRange(0.0F, 1.0F)
-                    .optionalFieldOf("water_surface_transparency")
-                    .forGetter(BiomeClientInfo::waterSurfaceTransparency)).apply(instance, BiomeClientInfo::new));
+                    .optionalFieldOf("water_surface_opacity")
+                    .forGetter(BiomeClientInfo::waterSurfaceOpacity)).apply(instance, BiomeClientInfo::new));
     public static final StreamCodec<ByteBuf, BiomeClientInfo> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.INT.apply(
                     ByteBufCodecs::optional),
             BiomeClientInfo::waterSurfaceColor,
@@ -34,7 +34,7 @@ public record BiomeClientInfo(Optional<Integer> waterSurfaceColor,
             ByteBufCodecs.FLOAT.apply(ByteBufCodecs::optional),
             BiomeClientInfo::waterFogDistance,
             ByteBufCodecs.FLOAT.apply(ByteBufCodecs::optional),
-            BiomeClientInfo::waterSurfaceTransparency,
+            BiomeClientInfo::waterSurfaceOpacity,
             BiomeClientInfo::new);
 
     public BiomeClientInfo(int waterSurfaceColor, int waterFogColor) {
@@ -45,21 +45,21 @@ public record BiomeClientInfo(Optional<Integer> waterSurfaceColor,
         this(waterSurfaceColor, waterFogColor, waterFogDistance, 0.75F);
     }
 
-    public BiomeClientInfo(int waterSurfaceColor, int waterFogColor, float waterFogDistance, float waterSurfaceTransparency) {
+    public BiomeClientInfo(int waterSurfaceColor, int waterFogColor, float waterFogDistance, float waterSurfaceOpacity) {
         this(Optional.of(waterSurfaceColor),
                 Optional.of(waterFogColor),
                 Optional.of(waterFogDistance),
-                Optional.of(waterSurfaceTransparency));
+                Optional.of(waterSurfaceOpacity));
     }
 
     public Optional<Integer> getWaterFogColor() {
         return this.waterFogColor.or(this::waterSurfaceColor);
     }
 
-    public int getWaterSurfaceTransparency() {
+    public int getWaterSurfaceOpacity() {
         // Bedrock Edition default value for biomes is 65%,
         // but 70% is the Java Edition water texture transparency (which we remove)
         // increase this a little as it is slightly reduced later in ModBiomeColors::getAverageWaterTransparency
-        return ARGB.as8BitChannel(this.waterSurfaceTransparency.orElse(0.75F));
+        return ARGB.as8BitChannel(this.waterSurfaceOpacity.orElse(0.75F));
     }
 }

@@ -25,7 +25,7 @@ public class WaterTintSource implements BlockTintSource {
 
     public final int colorInWorld(BlockAndTintGetter level, BlockPos pos) {
         int color = CustomBiomeColors.getAverageWaterColor(level, pos);
-        float alpha = CustomBiomeColors.getAverageWaterTransparency(level, pos);
+        float alpha = CustomBiomeColors.getAverageWaterOpacity(level, pos);
         return ARGB.color(alpha, color);
     }
 }

@@ -12,9 +12,9 @@ public class ClientConfig implements ConfigCore {
     public boolean waterFogDistance = true;
     @Config(description = "Render water blocks with a varying transparency depending on the current biome.",
             gameRestart = true)
-    public boolean waterSurfaceTransparency = true;
+    public boolean waterSurfaceOpacity = true;
 
     public boolean requiresCustomWaterTintSource() {
-        return this.waterSurfaceColor || this.waterSurfaceTransparency;
+        return this.waterSurfaceColor || this.waterSurfaceOpacity;
     }
 }

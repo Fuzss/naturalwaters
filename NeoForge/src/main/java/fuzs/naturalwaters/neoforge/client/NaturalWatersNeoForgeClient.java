@@ -55,10 +55,10 @@ public class NaturalWatersNeoForgeClient {
     private static void registerLoadingHandlers(IEventBus eventBus) {
         eventBus.addListener((final RegisterColorHandlersEvent.ColorResolvers event) -> {
             event.register(CustomBiomeColors.WATER_COLOR_RESOLVER);
-            event.register(CustomBiomeColors.WATER_TRANSPARENCY_RESOLVER);
+            event.register(CustomBiomeColors.WATER_OPACITY_RESOLVER);
         });
         eventBus.addListener((final RegisterFluidModelsEvent event) -> {
-            if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceTransparency) {
+            if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceOpacity) {
                 registerFluidModel(event, OPAQUE_WATER_MODEL, Fluids.WATER, Fluids.FLOWING_WATER);
             } else if (NaturalWaters.CONFIG.get(ClientConfig.class).waterSurfaceColor) {
                 registerFluidModel(event, TRANSPARENT_WATER_MODEL, Fluids.WATER, Fluids.FLOWING_WATER);
