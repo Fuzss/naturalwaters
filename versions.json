@@ -6,11 +6,17 @@
     "26.1.x": "maintained",
     "26.2.x": "primary"
   },
-  "properties": {
-    "distributions.curseforge.id": "1367853",
-    "distributions.curseforge.slug": "natural-waters",
-    "distributions.github.slug": "natural-waters",
-    "distributions.modrinth.id": "aYttCyCw",
-    "distributions.modrinth.slug": "natural-waters"
+  "distributions": {
+    "curseforge": {
+      "id": "1367853",
+      "slug": "natural-waters"
+    },
+    "github": {
+      "slug": "natural-waters"
+    },
+    "modrinth": {
+      "id": "aYttCyCw",
+      "slug": "natural-waters"
+    }
   }
 }
